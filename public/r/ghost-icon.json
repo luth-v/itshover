@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ghost-icon",
+  "dependencies": ["motion"],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "icons/ghost-icon.tsx",
+      "content": "import { forwardRef, useImperativeHandle } from \"react\";\nimport { AnimatedIconHandle, AnimatedIconProps } from \"./types\";\nimport { motion, useAnimate } from \"motion/react\";\n\nconst GhostIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(\n  (\n    { size = 24, color = \"currentColor\", strokeWidth = 2, className = \"\" },\n    ref,\n  ) => {\n    const [scope, animate] = useAnimate();\n\n    const start = async () => {\n      // floating + wiggle\n      animate(\n        \".ghost-body\",\n        {\n          y: [0, -8, -4, -8, 0],\n          rotate: [0, -3, 3, -2, 0],\n        },\n        { duration: 1.2, ease: \"easeInOut\" },\n      );\n\n      // eyes blink\n      animate(\n        \".ghost-eye\",\n        {\n          scaleY: [1, 0.1, 1, 0.1, 1],\n          scaleX: [1, 1.2, 1, 1.2, 1],\n        },\n        { duration: 0.8, ease: \"easeInOut\" },\n      );\n\n      // wavy bottom\n      await animate(\n        \".ghost-body\",\n        { scaleX: [1, 1.05, 0.98, 1.02, 1] },\n        { duration: 0.6, ease: \"easeInOut\" },\n      );\n    };\n\n    const stop = () => {\n      animate(\".ghost-body\", { y: 0, rotate: 0, scaleX: 1 }, { duration: 0.2 });\n      animate(\".ghost-eye\", { scaleX: 1, scaleY: 1 }, { duration: 0.2 });\n    };\n\n    useImperativeHandle(ref, () => ({\n      startAnimation: start,\n      stopAnimation: stop,\n    }));\n\n    const handleHoverStart = () => {\n      start();\n    };\n\n    const handleHoverEnd = () => {\n      stop();\n    };\n\n    return (\n      <motion.svg\n        ref={scope}\n        onHoverStart={handleHoverStart}\n        onHoverEnd={handleHoverEnd}\n        xmlns=\"http://www.w3.org/2000/svg\"\n        width={size}\n        height={size}\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke={color}\n        strokeWidth={strokeWidth}\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n        className={`cursor-pointer ${className}`}\n        style={{ overflow: \"visible\" }}\n      >\n        <motion.path\n          className=\"ghost-body\"\n          style={{ transformOrigin: \"12px 14px\" }}\n          d=\"M5 11a7 7 0 0 1 14 0v7a1.78 1.78 0 0 1 -3.1 1.4a1.65 1.65 0 0 0 -2.6 0a1.65 1.65 0 0 1 -2.6 0a1.65 1.65 0 0 0 -2.6 0a1.78 1.78 0 0 1 -3.1 -1.4v-7\"\n        />\n        <motion.path\n          className=\"ghost-eye\"\n          style={{ transformOrigin: \"10px 10px\" }}\n          d=\"M10 10h.01\"\n        />\n        <motion.path\n          className=\"ghost-eye\"\n          style={{ transformOrigin: \"14px 10px\" }}\n          d=\"M14 10h.01\"\n        />\n      </motion.svg>\n    );\n  },\n);\n\nGhostIcon.displayName = \"GhostIcon\";\n\nexport default GhostIcon;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "icons/types.ts",
+      "content": "export interface AnimatedIconProps {\n  /** Icon size in pixels or CSS string */\n  size?: number | string;\n  /** Icon color (defaults to currentColor) */\n  color?: string;\n  /** SVG stroke width */\n  strokeWidth?: number;\n  /** Additional CSS classes */\n  className?: string;\n}\n\nexport interface AnimatedIconHandle {\n  startAnimation: () => void;\n  stopAnimation: () => void;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

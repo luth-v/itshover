@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout-sidebar-right-collapse-icon",
+  "dependencies": ["motion"],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "icons/layout-sidebar-right-collapse-icon.tsx",
+      "content": "import React from \"react\";\nimport { motion } from \"framer-motion\";\n\ninterface LayoutSidebarRightCollapseIconProps {\n  size?: number;\n  color?: string;\n  strokeWidth?: number;\n  className?: string;\n  animate?: boolean;\n}\n\nconst LayoutSidebarRightCollapseIcon: React.FC<\n  LayoutSidebarRightCollapseIconProps\n> = ({\n  size = 24,\n  color = \"currentColor\",\n  strokeWidth = 2,\n  className = \"\",\n  animate = true,\n}) => {\n  const chevronVariants = {\n    initial: { x: 0, opacity: 1 },\n    animate: {\n      x: [0, 3, 0],\n      opacity: [1, 0.7, 1],\n      transition: {\n        duration: 1.5,\n        repeat: Infinity,\n      },\n    },\n  };\n\n  const sidebarVariants = {\n    initial: { opacity: 1 },\n    animate: {\n      opacity: [1, 0.6, 1],\n      transition: {\n        duration: 2,\n        repeat: Infinity,\n      },\n    },\n  };\n\n  return (\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width={size}\n      height={size}\n      viewBox=\"0 0 24 24\"\n      fill=\"none\"\n      stroke={color}\n      strokeWidth={strokeWidth}\n      strokeLinecap=\"round\"\n      strokeLinejoin=\"round\"\n      className={`icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-right-collapse ${className}`}\n    >\n      <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" />\n      <path d=\"M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z\" />\n      <motion.path\n        d=\"M15 4v16\"\n        variants={animate ? sidebarVariants : undefined}\n        initial={animate ? \"initial\" : undefined}\n        animate={animate ? \"animate\" : undefined}\n      />\n      <motion.path\n        d=\"M9 10l2 2l-2 2\"\n        variants={animate ? chevronVariants : undefined}\n        initial={animate ? \"initial\" : undefined}\n        animate={animate ? \"animate\" : undefined}\n      />\n    </svg>\n  );\n};\n\nLayoutSidebarRightCollapseIcon.displayName = \"LayoutSidebarRightCollapseIcon\";\n\nexport default LayoutSidebarRightCollapseIcon;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "icons/types.ts",
+      "content": "export interface AnimatedIconProps {\n  /** Icon size in pixels or CSS string */\n  size?: number | string;\n  /** Icon color (defaults to currentColor) */\n  color?: string;\n  /** SVG stroke width */\n  strokeWidth?: number;\n  /** Additional CSS classes */\n  className?: string;\n}\n\nexport interface AnimatedIconHandle {\n  startAnimation: () => void;\n  stopAnimation: () => void;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

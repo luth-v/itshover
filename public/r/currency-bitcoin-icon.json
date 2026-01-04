@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "currency-bitcoin-icon",
+  "dependencies": ["motion"],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "icons/currency-bitcoin-icon.tsx",
+      "content": "import { forwardRef, useImperativeHandle } from \"react\";\nimport { AnimatedIconHandle, AnimatedIconProps } from \"./types\";\nimport { motion, useAnimate } from \"motion/react\";\n\nconst CurrencyBitcoinIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(\n  (\n    { size = 24, color = \"currentColor\", strokeWidth = 2, className = \"\" },\n    ref,\n  ) => {\n    const [scope, animate] = useAnimate();\n\n    const start = async () => {\n      await animate(\n        \".btc-main, .btc-lines, .btc-center\",\n        { pathLength: 0, opacity: 0 },\n        { duration: 0 },\n      );\n\n      await animate(\n        \".btc-lines\",\n        { pathLength: 1, opacity: 1 },\n        { duration: 0.25, ease: \"easeOut\" },\n      );\n\n      await animate(\n        \".btc-main\",\n        { pathLength: 1, opacity: 1 },\n        { duration: 0.35, ease: \"easeOut\" },\n      );\n\n      await animate(\n        \".btc-center\",\n        { pathLength: 1, opacity: 1 },\n        { duration: 0.2, ease: \"easeOut\" },\n      );\n\n      animate(\n        \".btc-symbol\",\n        { scale: [0.95, 1] },\n        { duration: 0.2, ease: \"easeOut\" },\n      );\n    };\n\n    const stop = () => {\n      animate(\n        \".btc-main, .btc-lines, .btc-center\",\n        { pathLength: 1, opacity: 1 },\n        { duration: 0.2 },\n      );\n      animate(\".btc-symbol\", { scale: 1 }, { duration: 0.2 });\n    };\n\n    useImperativeHandle(ref, () => {\n      return {\n        startAnimation: start,\n        stopAnimation: stop,\n      };\n    });\n\n    const handleHoverStart = () => {\n      start();\n    };\n\n    const handleHoverEnd = () => {\n      stop();\n    };\n\n    return (\n      <motion.div\n        ref={scope}\n        onHoverStart={handleHoverStart}\n        onHoverEnd={handleHoverEnd}\n        className={`inline-flex cursor-pointer items-center justify-center ${className}`}\n      >\n        <svg\n          xmlns=\"http://www.w3.org/2000/svg\"\n          width={size}\n          height={size}\n          viewBox=\"0 0 24 24\"\n          fill=\"none\"\n          stroke={color}\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"round\"\n          strokeLinejoin=\"round\"\n        >\n          <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" />\n\n          <motion.g\n            className=\"btc-symbol\"\n            style={{ transformOrigin: \"50% 50%\" }}\n          >\n            <motion.g className=\"btc-main\">\n              <motion.path\n                d=\"M6 6h8a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-8\"\n                pathLength={1}\n              />\n              <motion.path d=\"M8 6l0 12\" pathLength={1} />\n            </motion.g>\n\n            <motion.path className=\"btc-center\" d=\"M8 12l6 0\" pathLength={1} />\n\n            <motion.g className=\"btc-lines\">\n              <motion.path d=\"M9 3l0 3\" pathLength={1} />\n              <motion.path d=\"M13 3l0 3\" pathLength={1} />\n              <motion.path d=\"M9 18l0 3\" pathLength={1} />\n              <motion.path d=\"M13 18l0 3\" pathLength={1} />\n            </motion.g>\n          </motion.g>\n        </svg>\n      </motion.div>\n    );\n  },\n);\n\nCurrencyBitcoinIcon.displayName = \"CurrencyBitcoinIcon\";\n\nexport default CurrencyBitcoinIcon;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "icons/types.ts",
+      "content": "export interface AnimatedIconProps {\n  /** Icon size in pixels or CSS string */\n  size?: number | string;\n  /** Icon color (defaults to currentColor) */\n  color?: string;\n  /** SVG stroke width */\n  strokeWidth?: number;\n  /** Additional CSS classes */\n  className?: string;\n}\n\nexport interface AnimatedIconHandle {\n  startAnimation: () => void;\n  stopAnimation: () => void;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "brand-nextjs-icon",
+  "dependencies": ["motion"],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "icons/brand-nextjs-icon.tsx",
+      "content": "import { forwardRef, useImperativeHandle } from \"react\";\nimport { AnimatedIconHandle, AnimatedIconProps } from \"./types\";\nimport { motion, useAnimate } from \"motion/react\";\n\nconst BrandNextjsIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(\n  (\n    { size = 24, color = \"currentColor\", strokeWidth = 2, className = \"\" },\n    ref,\n  ) => {\n    const [scope, animate] = useAnimate();\n\n    const start = async () => {\n      await animate(\".circle\", { pathLength: 0, opacity: 0 }, { duration: 0 });\n      await animate(\".line\", { pathLength: 0, opacity: 0 }, { duration: 0 });\n\n      await animate(\n        \".circle\",\n        { pathLength: [0, 1], opacity: [0, 1] },\n        { duration: 1.5 },\n      );\n\n      await animate(\n        \".line\",\n        { pathLength: [0, 1], opacity: [0, 1] },\n        { duration: 0.4 },\n      );\n    };\n\n    const stop = () => {\n      animate(\".circle\", { pathLength: 1, opacity: 1 }, { duration: 0.2 });\n      animate(\".line\", { pathLength: 1, opacity: 1 }, { duration: 0.2 });\n    };\n\n    useImperativeHandle(ref, () => {\n      return {\n        startAnimation: start,\n        stopAnimation: stop,\n      };\n    });\n\n    const handleHoverStart = () => {\n      start();\n    };\n\n    const handleHoverEnd = () => {\n      stop();\n    };\n\n    return (\n      <svg\n        ref={scope}\n        onMouseEnter={handleHoverStart}\n        onMouseLeave={handleHoverEnd}\n        xmlns=\"http://www.w3.org/2000/svg\"\n        width={size}\n        height={size}\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke={color}\n        strokeWidth={strokeWidth}\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n        className={`icon icon-tabler icons-tabler-outline icon-tabler-brand-nextjs cursor-pointer ${className}`}\n      >\n        <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" />\n        <motion.path\n          className=\"circle\"\n          d=\"M9 15v-6l7.745 10.65a9 9 0 1 1 2.255 -1.993\"\n          initial={{ pathLength: 1, opacity: 1 }}\n        />\n        <motion.path\n          className=\"line\"\n          d=\"M15 12v-3\"\n          initial={{ pathLength: 1, opacity: 1 }}\n        />\n      </svg>\n    );\n  },\n);\n\nBrandNextjsIcon.displayName = \"BrandNextjsIcon\";\n\nexport default BrandNextjsIcon;\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "icons/types.ts",
+      "content": "export interface AnimatedIconProps {\n  /** Icon size in pixels or CSS string */\n  size?: number | string;\n  /** Icon color (defaults to currentColor) */\n  color?: string;\n  /** SVG stroke width */\n  strokeWidth?: number;\n  /** Additional CSS classes */\n  className?: string;\n}\n\nexport interface AnimatedIconHandle {\n  startAnimation: () => void;\n  stopAnimation: () => void;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
